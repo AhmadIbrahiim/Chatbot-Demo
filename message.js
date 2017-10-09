@@ -119,7 +119,7 @@ function message(ID,type,text)
 					// {
 						yield facebook.sendQuickReply(ID,
 							{
-								text:"Welcome "+object.first_name+" to our MOI Chatbot, how can I help you",
+								text:"Welcome "+object.first_name+" to our MOI Chatbot, how can I help you ?",
 								quick_replies:
 								[
 									{
