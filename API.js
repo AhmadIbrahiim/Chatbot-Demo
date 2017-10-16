@@ -32,6 +32,7 @@ function Text(ID,text)
 			{
 				lang=lango
             }
+            console.log("Lang is Arabic: "+lang)
             if(step=='comtexten')
 			{
                 yield db.Step(ID,'set','phoneen');                
@@ -60,9 +61,7 @@ function Text(ID,text)
 				if(NL.phone_number!='undefined')
 				{
 					res(["شكراً لك .. تم تسجيل شكوتك وسوف يتم التواصل مع من قبل الفريق المختص ","hank you for using MOI Chatbot, would you have a few minutes to fill a survey related to our services? It will only only be 3 questions taking about 30 seconds"]);    				yield db.Step(ID,'set','surveryen');
-					// yield db.Step(ID,'lang',null)
-					
-				}
+		        }
 				else 
 				{
 					res("يجب كتابة رقم الهاتف .. لنواصل مع تسجيل الشكوى");
