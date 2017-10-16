@@ -58,7 +58,9 @@ function Text(ID, text) {
             if ( lang == "en") {
                 console.log("Inside text English -->")
                 if ((step == 'user' || step == 'new') && typeof NL.greeting != 'undefined') {
-                    res("Welcome to our MOI Chatbot, how can I help you ?")
+                    res("Welcome to our MOI Chatbot, how can I help you ?");
+                    yield db.Step(ID,'set','waitfortrorvisa')
+                    
 
                 }
 
@@ -80,8 +82,6 @@ function Text(ID, text) {
                 else if (step == 'complain') {
                     res('Ok, please type your complaint');
                     yield db.Step(ID, 'set', 'comtexten');
-
-
                 }
                 else if (step == "creditcarden") {
                     res("Enter the expiry date in the format mm/yyyy")
