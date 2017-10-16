@@ -54,7 +54,7 @@ function Text(ID, text) {
                 }
             }
 
-            console.log("Before English or Arabic --> ",)
+            console.log("Before English or Arabic --> ")
             if ( lang == "en") {
                 console.log("Inside text English -->")
                 if ((step == 'user' || step == 'new') && typeof NL.greeting != 'undefined') {
