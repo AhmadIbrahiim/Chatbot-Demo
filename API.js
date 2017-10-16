@@ -9,7 +9,7 @@ function Text(ID,text)
 {
     return new Promise((res,rej)=>
     {
-        
+        console.log("User text : "+text+" PH:"+ID)
         co(function*()
         {
             var call = yield db.Step(ID,'get','');
