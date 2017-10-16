@@ -13,7 +13,7 @@ function Text(ID,text)
         co(function*()
         {
             var call = yield db.Step(ID,'get','');
-			var object = yield facebook.GetuserData(ID);
+			//var object = yield facebook.GetuserData(ID);
 			var newtext=text.toLowerCase();			
 			var NL =  yield NLP.GetEntitys(newtext);
 			var step =call[0].step;
