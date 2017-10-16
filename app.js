@@ -85,6 +85,7 @@ app.get('/API/:text/:id',(req,res)=>
   {
     
     var BestTex = yield API.Text(req.params.id,req.params.text)
+    console.log(BestTex);
     res.send({Reply:BestTex});
   })
 })

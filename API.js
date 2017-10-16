@@ -32,7 +32,7 @@ function Text(ID,text)
 			{
 				lang=lango
             }
-            console.log("Lang is Arabic: "+lang)
+            console.log("Lang is : "+lang)
             if(step=='comtexten')
 			{
                 yield db.Step(ID,'set','phoneen');                
@@ -70,34 +70,11 @@ function Text(ID,text)
 
 			if(type=="text"&&lang=="en")
 			{
+                console.log("Inside text English -->")
 				if((step=='user'||step=='new')&&typeof NL.greeting !='undefined')
 				{
-					// if(step=='new')
-					// {
-					// 	yield facebook.sendTextMessage(ID,"Welcome "+object.first_name+" to our Demo bot!\n It's your first experince we hope you enjoyed it!");
-					// 	yield facebook.sendQuickReply(ID,
-					// 		{
-					// 			text:"May i help you ?",
-					// 			quick_replies:
-					// 			[
-					// 				{
-					// 					content_type:'text',
-					// 					payload:'yeshelp',
-					// 					title:'Yes'
-					// 				},
-					// 				{
-					// 					content_type:'text',
-					// 					payload:'nohelp',
-					// 					title:'No'
-					// 				},
-					// 			]
-	
-					// 		})
-					// 		yield db.Step(ID,'set','waityes')
-							
-					// }
-					// else 
-					res("Welcome to our MOI Chatbot, how can I help you ?")
+                    res("Welcome to our MOI Chatbot, how can I help you ?")
+                    
 				}
 			
 				else if(newtext=='yes'&&step=='waityes')
