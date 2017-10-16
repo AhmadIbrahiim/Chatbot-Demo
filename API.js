@@ -54,8 +54,8 @@ function Text(ID, text) {
                 }
             }
 
-            console.log("Before English or Arabic --> ")
-            if (type == "text" && lang == "en") {
+            console.log("Before English or Arabic --> ",)
+            if ( lang == "en") {
                 console.log("Inside text English -->")
                 if ((step == 'user' || step == 'new') && typeof NL.greeting != 'undefined') {
                     res("Welcome to our MOI Chatbot, how can I help you ?")
@@ -294,7 +294,7 @@ function Text(ID, text) {
 
                 }
             }
-            if (type == "text" && lang == "ar") {
+            if ( lang == "ar") {
                 if ((step == 'user' || step == 'new') && typeof NL.greeting != 'undefined') {
                     // if(step=='new')
                     // {
