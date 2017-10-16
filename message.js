@@ -20,7 +20,6 @@ function message(ID,type,text)
 			if(Engli.indexOf(text[0])>-1)
 			{
 				lang='en';
-			
 			}
 			if(lango==null)
 			{
@@ -46,7 +45,7 @@ function message(ID,type,text)
 				{
 					yield facebook.sendTextMessage(ID,"thank you the complaint was filed and a customer service will be in touch with you soon.");
 					yield db.Step(ID,'set','user');
-					yield	db.Step(ID,'lang',null)
+					yield db.Step(ID,'lang',null)
 					
 				}
 				else 
