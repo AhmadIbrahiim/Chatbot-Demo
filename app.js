@@ -44,9 +44,10 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   console.error("Missing config values");
   process.exit(1);
 }
-app.post('/upload', upload.single('avatar'), function (req, res, next) {
-  console.log(req.file);
+app.post('/upload', function (req, res, next) {
   console.log(req.body);
+ // var file = __dirname + "/" + req.files.file.name;
+  
   excelParser.worksheets({
     inFile: req.body.file
   }, function(err, worksheets){
