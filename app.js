@@ -42,7 +42,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
 }
 app.post("/upload",(req,res)=>
 {
-
+  console.log(req.body);
 })
 app.post('/open/:id',(req,res)=>
 {
