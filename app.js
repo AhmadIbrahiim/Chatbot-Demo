@@ -18,6 +18,8 @@ var mes=require('./message.js')
 var quick = require('./quickreply.js');
 var db = require('./database.js');
 var excelParser = require('excel-parser');
+var multer  = require('multer')
+var upload = multer({ dest: 'public/' })
 
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
@@ -40,10 +42,13 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   console.error("Missing config values");
   process.exit(1);
 }
-app.post("/upload",(req,res,next)=>
-{
+app.post('/upload', upload.single('avatar'), function (req, res, next) {
+  console.log(req.file);
   console.log(req.body);
+  // req.file is the `avatar` file
+  // req.body will hold the text fields, if there were any
 })
+
 app.post('/open/:id',(req,res)=>
 {
   sendTextMessage(req.params.id,"Great, you choose the gateway")
