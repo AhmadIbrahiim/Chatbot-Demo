@@ -114,8 +114,8 @@ function Text(ID, text) {
 
                     }
                     else if (newtext.includes('home')) {
-                        yield db.Step(ID, 'set', 'user');
-                        yield db.Step(ID, 'lang', "en");
+                        res(["Welcome to our MOI Chatbot, how can I help you ?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}]);
+                        yield db.Step(ID,'set','waitfortrorvisa')
                         //	message(ID,"text","hi")
 
                     }
@@ -159,9 +159,9 @@ function Text(ID, text) {
                         yield db.Step(ID, 'set', 'waitfortrorvisa')
                     }
                     else if (newtext.includes('home')) {
-                        yield db.Step(ID, 'set', 'user');
-                        yield db.Step(ID, 'lang', "en");
-                        message(ID, "text", "hi")
+                   
+                        res(["Welcome to our MOI Chatbot, how can I help you ?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}]);
+                        yield db.Step(ID,'set','waitfortrorvisa')
 
                     }
                     else {
@@ -194,9 +194,8 @@ function Text(ID, text) {
                         yield db.Step(ID, 'lang', null);
                     }
                     else if (newtext.includes('home')) {
-                        yield db.Step(ID, 'set', 'user');
-                        yield db.Step(ID, 'lang', "en");
-                        message(ID, "text", "hi")
+                        res(["Welcome to our MOI Chatbot, how can I help you ?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}]);
+                        yield db.Step(ID,'set','waitfortrorvisa')
 
                     }
                     else {
@@ -226,9 +225,8 @@ function Text(ID, text) {
                         res(['Okay no problem we have cancled it :) ',{options:null}])
                     }
                     else if (newtext.includes('home')) {
-                        yield db.Step(ID, 'set', 'user');
-                        yield db.Step(ID, 'lang', "en");
-                        message(ID, "text", "hi")
+                        res(["Welcome to our MOI Chatbot, how can I help you ?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}]);
+                        yield db.Step(ID,'set','waitfortrorvisa')
 
                     }
                     else {
@@ -268,9 +266,8 @@ function Text(ID, text) {
 
                     }
                     else if (newtext.includes('home')) {
-                        yield db.Step(ID, 'set', 'user');
-                        yield db.Step(ID, 'lang', "en");
-                        //message(ID,"text","hi")
+                        res(["Welcome to our MOI Chatbot, how can I help you ?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}]);
+                        yield db.Step(ID,'set','waitfortrorvisa')
 
                     }
                     else {
