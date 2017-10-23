@@ -17,6 +17,7 @@ var co = require('co')
 var mes=require('./message.js')
 var quick = require('./quickreply.js');
 var db = require('./database.js');
+var excelParser = require('excel-parser');
 
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
@@ -39,6 +40,10 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   console.error("Missing config values");
   process.exit(1);
 }
+app.post("/upload",(req,res)=>
+{
+
+})
 app.post('/open/:id',(req,res)=>
 {
   sendTextMessage(req.params.id,"Great, you choose the gateway")
