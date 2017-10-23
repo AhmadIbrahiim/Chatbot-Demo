@@ -45,7 +45,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   process.exit(1);
 }
 app.post('/upload', function (req, res, next) {
-  console.log(req.body);
+  console.log(req);
  // var file = __dirname + "/" + req.files.file.name;
   
   excelParser.worksheets({
