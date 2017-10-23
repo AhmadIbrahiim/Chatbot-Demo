@@ -24,6 +24,8 @@ var upload = multer({ dest: 'public/' })
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(express.static('public'));
 const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
   process.env.MESSENGER_APP_SECRET :
