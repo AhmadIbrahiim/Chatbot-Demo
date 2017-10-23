@@ -51,7 +51,7 @@ app.post('/upload', upload.single('avatar'), function (req, res, next) {
     inFile: req.body.file
   }, function(err, worksheets){
     if(err) console.error(err);
-    consol.log(worksheets);
+    console.log(worksheets);
   });
   // req.file is the `avatar` file
   // req.body will hold the text fields, if there were any
