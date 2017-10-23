@@ -47,6 +47,12 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
 app.post('/upload', upload.single('avatar'), function (req, res, next) {
   console.log(req.file);
   console.log(req.body);
+  excelParser.worksheets({
+    inFile: req.body.file
+  }, function(err, worksheets){
+    if(err) console.error(err);
+    consol.log(worksheets);
+  });
   // req.file is the `avatar` file
   // req.body will hold the text fields, if there were any
 })
