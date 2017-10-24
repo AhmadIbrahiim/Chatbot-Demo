@@ -57,7 +57,7 @@ function Text(ID, text) {
             console.log("Before English or Arabic --> ")
             if ( lang == "en") {
                 console.log("Inside text English -->")
-                if ((step == 'user' || step == 'new') && typeof NL.greeting != 'undefined') {
+                if ((step == 'user' || step == 'new') /* && typeof NL.greeting != 'undefined' */) {
                     res(["Welcome to our MOI Chatbot, how can I help you ?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}]);
                     yield db.Step(ID,'set','waitfortrorvisa')
                     
@@ -293,7 +293,7 @@ function Text(ID, text) {
                 }
             }
             if ( lang == "ar") {
-                if ((step == 'user' || step == 'new') && typeof NL.greeting != 'undefined') {
+                if ((step == 'user' || step == 'new') /* && typeof NL.greeting != 'undefined' */) {
                     // if(step=='new')
                     // {
                     // 	yield facebook.sendTextMessage(ID,"مرحباً "+object.first_name+" الى البوت التجريبى !\n نتمنى لك تجربه سعيده!");
@@ -413,7 +413,7 @@ function Text(ID, text) {
 
                     }
                     else if (typeof NL.complaint != 'undefined') {
-                        res(" ؟ضد من  ")
+                        res([" ؟ضد من  ", { options: ["اتصالات", "دو"] }]);
                         yield db.Step(ID, 'set', 'complainar')
 
                     }
