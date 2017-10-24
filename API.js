@@ -52,7 +52,9 @@ function Text(ID, text) {
             }
             else if (step == 'phonear') {
                 if (NL.phone_number != 'undefined') {
-                    res(["شكراً لك .. تم تسجيل شكوتك وسوف يتم التواصل مع من قبل الفريق المختص ", "hank you for using MOI Chatbot, would you have a few minutes to fill a survey related to our services? It will only only be 3 questions taking about 30 seconds"]); yield db.Step(ID, 'set', 'surveryen');
+                    res(["شكراً لك .. تم تسجيل شكوتك وسوف يتم التواصل مع من قبل الفريق المختص ",{options:null}]); 
+                    yield db.Step(ID, 'set', 'user');
+                    yield db.Step(ID, 'lang', null);
                 }
                 else {
                     res("يجب كتابة رقم الهاتف .. لنواصل مع تسجيل الشكوى");
