@@ -368,6 +368,8 @@ function Text(ID, text) {
                     else if(newtext.includes('وسيط')||newtext.includes('موبيل'))
                     {
                         res(["جاري تنفيذ عملية الدفع .. وسوف يتم ابلاغك هاتفياً فورا الاتمام",{options:null}])
+                        yield db.Step(ID, 'set', 'user');
+                        yield db.Step(ID, 'lang', null);
                         
                     }
                     else if (newtext.includes('الغاء')) {
