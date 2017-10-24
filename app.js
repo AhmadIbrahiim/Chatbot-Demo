@@ -49,7 +49,8 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
 }
 app.post('/upload', function (req, res, next) {
   console.log(req.files);
-
+  var sampleFile = req.files.sampleFile;
+  
   excelParser.worksheets({
     inFile: req.body.file
   }, function(err, worksheets){
