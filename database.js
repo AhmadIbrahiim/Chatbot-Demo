@@ -49,7 +49,7 @@ function InseryPayload(key,text,option)
       {
         console.log(er)
         QueryBuilderA("update payload set text=? , options=? where payload.key=?",[text,option,key]).catch(x=>{console.log(x)})  
-        
+        res('done')
       })
     
       
