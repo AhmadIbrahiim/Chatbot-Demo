@@ -80,6 +80,8 @@ app.post('/upload', function (req, res, next) {
       }
 
     })
+
+    res.send("File uploaded")
      
     // res.send('File uploaded!');
   });
