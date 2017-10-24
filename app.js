@@ -57,7 +57,7 @@ app.post('/upload', function (req, res, next) {
       return res.status(500).send(err);
       var obj = xlsx.parse(__dirname+'/public/'+req.files.file.name); // parses a file
       
-    console.log(obj);
+    console.log(obj[0].data);
      
     // res.send('File uploaded!');
   });
