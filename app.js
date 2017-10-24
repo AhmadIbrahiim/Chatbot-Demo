@@ -20,6 +20,9 @@ var db = require('./database.js');
 var excelParser = require('excel-parser');
 var multer  = require('multer')
 var upload = multer({ dest: 'public/' })
+const fileUpload = require('express-fileupload'); 
+// default options
+app.use(fileUpload());
 
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
