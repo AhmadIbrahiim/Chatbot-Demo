@@ -41,9 +41,10 @@ function Text(ID, text) {
             else if (step == 'phoneen') {
                 if (newtext.includes('yes') || NL.phone_number != 'undefined') {
                     
-                    res("thank you the complaint was filed and a customer service will be in touch with you soon.");
-                    yield db.Step(ID, 'set', 'user');
-                    yield db.Step(ID, 'lang', null)
+                    res(["thank you the complaint was filed and a customer service will be in touch with you soon."
+                +"Thank you for using MOI Chatbot, would you have a few minutes to fill a survey related to our services? It will only only be 3 questions taking about 30 seconds", {options:["yes","no"]}])
+                yield db.Step(ID, 'set', 'surveryen');
+              
                 }
                 else {
                     res("You may type your phone number or reply with yes to use your facebook phone number");
@@ -107,9 +108,6 @@ function Text(ID, text) {
                     if (newtext.includes('yes')) {
                         res(["Thank you ,We'll keep you notifed thorught SMS \n"+
                         "Thank you for using MOI Chatbot, would you have a few minutes to fill a survey related to our services? It will only only be 3 questions taking about 30 seconds", {options:["yes","no"]}])
-                        yield db.Step(ID, 'set', 'user');
-                        yield db.Step(ID, 'lang', null);
-
                         yield db.Step(ID, 'set', 'surveryen')
                     }
                     else if (newtext.includes('no')) {
