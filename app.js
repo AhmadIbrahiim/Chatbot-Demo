@@ -49,7 +49,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
 }
 app.post('/upload', function (req, res, next) {
   console.log(req.files);
-  var sampleFile = req.files.sampleFile;
+  var sampleFile = req.files.file;
   sampleFile.mv('/public/'+req.body.file, function(err) {
     if (err)
       return res.status(500).send(err);
