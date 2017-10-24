@@ -57,13 +57,26 @@ app.post('/upload', function (req, res, next) {
       return res.status(500).send(err);
       var obj = xlsx.parse(__dirname+'/public/'+req.files.file.name); // parses a file
       
-    console.log(obj[0].data);
+   // console.log(obj[0].data);
     co(function*()
     {
       for(var ob=0;ob<obj[0].data.length;ob++)
       {
         var firstobject=obj[0].data[ob];
         console.log(firstobject);
+        var optio=null;
+        var key = firstobject[0]
+        var text = firstobject[1]
+        if(firstobject.length>1)
+        {
+          for(var ins=2;ins<firstobject.length;ins++)
+          {
+            optio+=firstobject[ins]+"#";
+          }
+
+        }
+
+        console.log(optio)
 
       }
 
