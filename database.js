@@ -48,7 +48,7 @@ function InseryPayload(key,text,option)
      QueryBuilderA("Insert into payload values (?,?,?)",[key,text,option]).catch(er=>
       {
         console.log(er)
-        QueryBuilderA("update payload set text=? , options=? where payload.key=?",[text,option,key]).catch(x=>{console.log(x)})  
+        QueryBuilderA("update payload set text=? , options=? where payload.key=?",[text,option,key]).catch(x=>{console.log("ُErro with update")})  
         res('done')
       })
     
