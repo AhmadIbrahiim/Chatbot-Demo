@@ -46,8 +46,8 @@ function InseryPayload(key,text,option)
   
     try
     {
-     QueryBuilderA("Insert into payload values (?,?,?)",[key,text,option]);
-    
+    var x= QueryBuilderA("Insert into payload values (?,?,?)",[key,text,option]);
+    console.log(x);
       
     }
     catch(ex)
@@ -75,7 +75,7 @@ function QueryBuilderA(query, prams) {
     if (err)
     {
       console.log(err);
-      rej("err");      
+      res("err");      
     }
     else
       res(data);
