@@ -220,6 +220,8 @@ function Text(ID, text) {
                     else if(newtext.includes('yes')||newtext.includes('pay it'))
                     {
                         res(['Thank your for paying it using chat!',{options:null}]);
+                        yield db.Step(ID, 'set', 'user');
+                        yield db.Step(ID, 'lang', null)
                         
                     }
                     else if (newtext.includes('home')) {
