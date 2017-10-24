@@ -217,6 +217,11 @@ function Text(ID, text) {
                         yield db.Step(ID, 'set', 'user');
                         yield db.Step(ID, 'lang', null)
                     }
+                    else if(newtext.includes('yes')||newtext.includes('pay'))
+                    {
+                        res(['Thank your for paying it using chat!',{options:null}]);
+                        
+                    }
                     else if (newtext.includes('home')) {
                         res(["Welcome to our MOI Chatbot, how can I help you ?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}]);
                         yield db.Step(ID,'set','waitfortrorvisa')
