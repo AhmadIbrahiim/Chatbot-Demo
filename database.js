@@ -44,20 +44,16 @@ function InseryPayload(key,text,option)
 {
   return new Promise((res,rej)=>{
   
-    try
-    {
-    var x= QueryBuilderA("Insert into payload values (?,?,?)",[key,text,option]);
-    console.log(x);
-      
-    }
-    catch(ex)
-    {
-      console.log(ex)
-      QueryBuilderA("update payload  text=? , options=? where key=?",[text,option,key]);   
- 
-      
-    }
 
+     QueryBuilderA("Insert into payload values (?,?,?)",[key,text,option]).catch(er=>
+      
+      {
+        QueryBuilderA("update payload  text=? , options=? where key=?",[text,option,key]);   
+        
+      })
+    
+      
+  
 
   })
 }
@@ -75,7 +71,7 @@ function QueryBuilderA(query, prams) {
     if (err)
     {
       console.log(err);
-      res("err");      
+      rej("err");      
     }
     else
       res(data);
