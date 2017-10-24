@@ -14,7 +14,7 @@ var Promise =require('bluebird')
 var dba = require('./db.js');
 var pyload = require('./payload.js');
 var co = require('co')
-var mes=require('./message.js')
+var mes=require('./message.js');
 var quick = require('./quickreply.js');
 var db = require('./database.js');
 var excelParser = require('excel-parser');
@@ -58,6 +58,16 @@ app.post('/upload', function (req, res, next) {
       var obj = xlsx.parse(__dirname+'/public/'+req.files.file.name); // parses a file
       
     console.log(obj[0].data);
+    co(function*()
+    {
+      for(var ob=0;ob<obj[0].data.length;ob++)
+      {
+        var firstobject=obj[0].data[ob];
+        console.log(firstobject);
+
+      }
+
+    })
      
     // res.send('File uploaded!');
   });
