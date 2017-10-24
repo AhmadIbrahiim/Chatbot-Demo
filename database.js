@@ -47,7 +47,7 @@ function InseryPayload(key,text,option)
 
      QueryBuilderA("Insert into payload values (?,?,?)",[key,text,option]).catch(er=>
       {
-        QueryBuilderA("update payload  text=? , options=? where key=?",[text,option,key]);   
+        QueryBuilderA("update payload set text=? , options=? where key=?",[text,option,key]);   
         
       })
     
