@@ -363,7 +363,12 @@ function Text(ID, text) {
                 }
                 else if (step == 'payamountafterar') {
                     if (newtext.includes('ادفع')) {
-                        res(["هل ترغب ف دفع المبلغ بإستخدام وسيط الدفع ام عن طريق الموبيل ؟",{options:["نعم","لا"]}])
+                        res(["هل ترغب ف دفع المبلغ بإستخدام وسيط الدفع ام عن طريق الموبيل ؟",{options:["وسيط","موبيل"]}])
+                    }
+                    else if(newtext.includes('وسيط')||newtext.includes('موبيل'))
+                    {
+                        res(["جاري تنفيذ عملية الدفع .. وسوف يتم ابلاغك هاتفياً فورا الاتمام",{options:null}])
+                        
                     }
                     else if (newtext.includes('الغاء')) {
                        
