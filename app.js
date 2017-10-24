@@ -21,6 +21,8 @@ var excelParser = require('excel-parser');
 var multer  = require('multer')
 var upload = multer({ dest: 'public/' })
 const fileUpload = require('express-fileupload'); 
+var xlsx = require('node-xlsx');
+
 // default options
 app.use(fileUpload());
 
@@ -53,14 +55,11 @@ app.post('/upload', function (req, res, next) {
   sampleFile.mv(__dirname+'/public/'+req.files.file.name, function(err) {
     if (err)
       return res.status(500).send(err);
- 
-      excelParser.worksheets({
-        inFile: __dirname+'/public/'+req.files.file.name
-      }, function(err, worksheets){
-        if(err) console.error(err);
-        console.log(worksheets);
-      });
-    res.send('File uploaded!');
+      var obj = xlsx.parse(__dirname+'/public/'+req.files.file.name); // parses a file
+      
+    console.log(obj);
+     
+    // res.send('File uploaded!');
   });
   
 
