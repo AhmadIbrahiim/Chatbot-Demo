@@ -27,19 +27,23 @@ function Text(ID, text) {
                 lang = lango
             }
             console.log("Lang is : " + lang)
+            console.log("User text is : "+text);
             if (step == 'comtexten') {
-                yield db.Step(ID, 'set', 'phoneen');
                 res("could you please give your phone number ? or can we use your fb phone number ? ");
+                yield db.Step(ID, 'set', 'phoneen');
+                
             }
             if (step == 'comtextar') {
-                yield db.Step(ID, 'set', 'phonear');
                 res("من فضلك اكتب رقم هاتفك ");
+                yield db.Step(ID, 'set', 'phonear');
+                
             }
             else if (step == 'phoneen') {
                 if (newtext.includes('yes') || NL.phone_number != 'undefined') {
+                    
+                    res("thank you the complaint was filed and a customer service will be in touch with you soon.");
                     yield db.Step(ID, 'set', 'user');
                     yield db.Step(ID, 'lang', null)
-                    res("thank you the complaint was filed and a customer service will be in touch with you soon.");
                 }
                 else {
                     res("You may type your phone number or reply with yes to use your facebook phone number");
@@ -159,10 +163,8 @@ function Text(ID, text) {
                         yield db.Step(ID, 'set', 'waitfortrorvisa')
                     }
                     else if (newtext.includes('home')) {
-                   
                         res(["Welcome to our MOI Chatbot, how can I help you ?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}]);
                         yield db.Step(ID,'set','waitfortrorvisa')
-
                     }
                     else {
                         res(["Please reply with *yes* or *no* or *home* to back to services",{options:null}])
@@ -171,16 +173,15 @@ function Text(ID, text) {
                 }
                 else if (step == 'scalefrom') {
                     if (text > 10) {
-                        res(["Thanks for the compliment, we will consider that as 10. :)",{options:null}]);
+                        res(["Thanks for the compliment, we will consider that as 10. :)"+ " on a scale from 1 to 10, how do are you satisfied with the electronic services of MOI in general?",{options:null}]);
 
                     }
                     else if (text > 5) {
-                        res(["Thank you so much",{options:null}]);
+                        res(["Thank you so much "+"on a scale from 1 to 10, how do are you satisfied with the electronic services of MOI in general?",{options:null}]);
                     }
                     else {
-                        res("We're sorry to hear that")
+                        res("We're sorry to hear that"+" on a scale from 1 to 10, how do are you satisfied with the electronic services of MOI in general?",{options:null})
                     }
-                    res(["on a scale from 1 to 10, how do are you satisfied with the electronic services of MOI in general?",{options:null}]);
                     yield db.Step(ID, 'set', 'nextscalfrom')
                 }
                 else if (step == 'surveryen') {
@@ -200,8 +201,6 @@ function Text(ID, text) {
                     }
                     else {
                         res(['I expect to reply with yes, no  or *home* to back to services:) ',{options:null}]);
-
-
                     }
                 }
                 else if ((newtext.includes('visa') || newtext.includes('traffic')) && step == 'waitfortrorvisa') {
@@ -212,17 +211,13 @@ function Text(ID, text) {
                 else if (step == 'payamountafter') {
                     console.log('Insdie payment after --> ')
                     if (newtext.includes('pay') || newtext.includes('yes')) {
-                        // yield db.Step(ID,'set','user');		
-                        // yield	db.Step(ID,'lang',null)
-
                         res(["Would like to pay using this chat or using or mobile payment gateway?",{options:["yes","no"]}]);
 
                     }
                     else if (newtext.includes('no')) {
+                        res(['Okay no problem we have cancled it :) ',{options:null}]);
                         yield db.Step(ID, 'set', 'user');
                         yield db.Step(ID, 'lang', null)
-
-                        res(['Okay no problem we have cancled it :) ',{options:null}])
                     }
                     else if (newtext.includes('home')) {
                         res(["Welcome to our MOI Chatbot, how can I help you ?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}]);
@@ -247,7 +242,7 @@ function Text(ID, text) {
                         res(['You have to type something related to *visa* or *traffic* or *home* to back to scervice ',{options:["yes","no"]}])
                     }
                 }
-                else if (step == 'waitfortrorvisa' || NL.length > 1) {
+                else if (step == 'waitfortrorvisa') {
                     if (typeof NL.action != 'undefined' && typeof NL.tobe != 'undefined') {
 
                         res(["Thanks,, let me confirm, you wish to pay your " + NL.tobe[0].value + ". is this correct",{options:["yes","no"]}])
@@ -339,10 +334,8 @@ function Text(ID, text) {
                 }
                 else if (step == "backcodear") {
                     res(["شكراً لك .. برجاء الانتظار حتى يتم تنفيذ العملية", "شكراً لك .. تم تأكيد عملية الدفع مبلغ *1250 ريال * بالكارت الذى ينتهى بـ 9999.. رقم العملية هو *9895552111* هل ترغب ف استقبال المراسالات عن طريق الرسائل النصية ",{options:["نغم","لا"]}]);
-                    yield db.Step(ID, 'set', 'waitholdar')
-                    setTimeout(() => {
-                        db.Step(ID, 'set', 'confirmsmsarabic')
-                    }, 10000)
+                    yield db.Step(ID, 'set', 'confirmsmsarabic')
+
                 }
                 else if (step == 'confirmsmsarabic') {
                     if (text.includes('نعم')) {
@@ -362,18 +355,15 @@ function Text(ID, text) {
 
 
                 }
-                else if (step == 'waitholdar') {
-
-                }
                 else if (step == 'payamountafterar') {
                     if (newtext.includes('ادفع')) {
                         res(["هل ترغب ف دفع المبلغ بإستخدام وسيط الدفع ام عن طريق الموبيل ؟",{options:["نعم","لا"]}])
-
                     }
                     else if (newtext.includes('الغاء')) {
-                        yield db.Step(ID, 'set', 'user');
-                        yield db.Step(ID, 'lang', null)
+                       
                         res(["لا مشكله .. تم الغاء العملية",{options:null}])
+                        yield db.Step(ID, 'set', 'user');
+                        yield db.Step(ID, 'lang', null);
                     }
                     else {
                         res(["يجب عليك ان تكتب *ادفع* او *الغاء* للمتابعة",{options:null}])
@@ -397,15 +387,9 @@ function Text(ID, text) {
                     yield db.Step(ID, 'set', 'comtextar');
 
                 }
-                else if (step == 'waitfortrorvisaar' || NL.length > 0) {
+                else if (step == 'waitfortrorvisaar') {
                     if (typeof NL.action != 'undefined' && typeof NL.tobe != 'undefined') {
                         res(["الـ " + NL.tobe[0].value + " الخاصه بك هي 1000 دينار"+"هل تريد ان تدفعها ؟",{options:["نعم","لا"]}]);
-
-                        yield db.Step(ID, 'set', 'user');
-                        yield db.Step(ID, 'lang', null)
-
-
-
                     }
                     else if (typeof NL.complaint != 'undefined') {
                         res([" ؟ضد من  ", { options: ["اتصالات", "دو"] }]);
@@ -418,7 +402,7 @@ function Text(ID, text) {
                         yield db.Step(ID, 'set', 'waitselectionar')
                     }
                     else {
-                        res(["لم افهم ماذا تريد ان اساعدك به ؟",{options:null}])
+                        res(["يجب ان يكون ردك له علاقة بالفيزا او الرخصة ",{options:null}])
                     }
 
                 }
