@@ -43,16 +43,20 @@ function Step(ID, target, val) {
 function InseryPayload(key,text,option)
 {
   return new Promise((res,rej)=>{
-  var x = QueryBuilderA("Insert into payload values (?,?,?)",[key,text,option]);
-  console.log(x);
-  if(x=='err')
-  {
-    QueryBuilderA("update payload  set key=? , text=? , options=?",[key,text,option]);
-  }
-  else
-  {
-    res("done")
-  }
+  
+    try
+    {
+      QueryBuilderA("Insert into payload values (?,?,?)",[key,text,option]);
+      res("done")
+      
+    }
+    catch(ex)
+    {
+      QueryBuilderA("update payload  set key=? , text=? , options=?",[key,text,option]);   
+      res("done")
+      
+    }
+
 
   })
 }
@@ -70,7 +74,7 @@ function QueryBuilderA(query, prams) {
     if (err)
     {
       console.log(err);
-      res("err");      
+      rej("err");      
     }
     else
       res(data);
