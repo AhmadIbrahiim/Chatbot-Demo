@@ -286,8 +286,9 @@ function Text(ID, text) {
 
                     }
                     else {
-                        yield db.Step(ID, 'lang', null)
-                        res(Ans.RandUnkown())
+                        res(["Welcome to our MOI Chatbot, how can I help you ?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}]);
+                        yield db.Step(ID,'set','waitfortrorvisa')
+                        //res(Ans.RandUnkown())
                     }
 
                 }
