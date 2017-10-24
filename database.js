@@ -47,13 +47,13 @@ function InseryPayload(key,text,option)
     try
     {
       QueryBuilderA("Insert into payload values (?,?,?)",[key,text,option]);
-      res("done")
+    
       
     }
     catch(ex)
     {
       QueryBuilderA("update payload  text=? , options=? where key=?",[text,option,key]);   
-      res("done")
+ 
       
     }
 
