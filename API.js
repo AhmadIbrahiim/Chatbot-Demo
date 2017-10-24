@@ -217,9 +217,9 @@ function Text(ID, text) {
                         yield db.Step(ID, 'set', 'user');
                         yield db.Step(ID, 'lang', null)
                     }
-                    else if(newtext.includes('yes')||newtext.includes('pay it'))
+                    else if(newtext.includes('yes')||newtext.includes('pay it')||newtext.includes('mobile'))
                     {
-                        res(['Thank your for paying it using chat!',{options:null}]);
+                        res(['Thank your for paying it ',{options:null}]);
                         yield db.Step(ID, 'set', 'user');
                         yield db.Step(ID, 'lang', null)
                         
