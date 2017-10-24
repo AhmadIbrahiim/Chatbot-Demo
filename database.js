@@ -44,6 +44,7 @@ function InseryPayload(key,text,option)
 {
   return new Promise((res,rej)=>{
   var x = QueryBuilderA("Insert into payload values (?,?,?)",[key,text,option]);
+  console.log(x);
   if(x=='err')
   {
     QueryBuilderA("update payload  set key=? , text=? , options=?",[key,text,option]);
