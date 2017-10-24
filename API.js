@@ -62,7 +62,7 @@ function Text(ID, text) {
             console.log("Before English or Arabic --> ")
             if ( lang == "en") {
                 console.log("Inside text English -->")
-                if ((step == 'user' || step == 'new') /* && typeof NL.greeting != 'undefined' */) {
+                if ((step == 'new') ||typeof NL.greeting != 'undefined' ) {
                     res(["Welcome to our MOI Chatbot, how can I help you ?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}]);
                     yield db.Step(ID,'set','waitfortrorvisa')
                     
