@@ -367,11 +367,6 @@ function Text(ID, text) {
                 }
                 else if (step == 'payamountafterar') {
                     if (newtext.includes('ادفع')) {
-                        yield db.Step(ID, 'set', 'user');
-                        yield db.Step(ID, 'lang', null)
-
-
-
                         res(["هل ترغب ف دفع المبلغ بإستخدام وسيط الدفع ام عن طريق الموبيل ؟",{options:["نعم","لا"]}])
 
                     }
