@@ -64,7 +64,7 @@ app.post('/upload', function (req, res, next) {
       {
         var firstobject=obj[0].data[ob];
         console.log(firstobject);
-        var optio=null;
+        var optio="";
         var key = firstobject[0]
         var text = firstobject[1]
         if(firstobject.length>1)
@@ -73,10 +73,9 @@ app.post('/upload', function (req, res, next) {
           {
             optio+=firstobject[ins]+"#";
           }
-
         }
-
-        console.log(optio)
+       yield db.InseryPayload(key,text,optio);
+       optio="";
 
       }
 
