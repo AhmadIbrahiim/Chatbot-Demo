@@ -208,7 +208,7 @@ function Text(ID, text) {
                 }
                 else if (step == 'payamountafter') {
                     console.log('Insdie payment after --> ')
-                    if (newtext.includes('pay') || newtext.includes('yes')) {
+                    if (newtext.includes('pay')) {
                         res(["Would like to pay using this chat or using or mobile payment gateway?",{options:["yes","no"]}]);
 
                     }
@@ -217,7 +217,7 @@ function Text(ID, text) {
                         yield db.Step(ID, 'set', 'user');
                         yield db.Step(ID, 'lang', null)
                     }
-                    else if(newtext.includes('yes')||newtext.includes('pay'))
+                    else if(newtext.includes('yes')||newtext.includes('pay it'))
                     {
                         res(['Thank your for paying it using chat!',{options:null}]);
                         
