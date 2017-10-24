@@ -54,15 +54,16 @@ app.post('/upload', function (req, res, next) {
     if (err)
       return res.status(500).send(err);
  
+      excelParser.worksheets({
+        inFile: __dirname+'/public/'+req.files.file.name
+      }, function(err, worksheets){
+        if(err) console.error(err);
+        console.log(worksheets);
+      });
     res.send('File uploaded!');
   });
   
-  excelParser.worksheets({
-    inFile: req.body.file
-  }, function(err, worksheets){
-    if(err) console.error(err);
-    console.log(worksheets);
-  });
+
   // req.file is the `avatar` file
   // req.body will hold the text fields, if there were any
 })
