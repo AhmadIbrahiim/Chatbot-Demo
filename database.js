@@ -39,7 +39,7 @@ function Step(ID, target, val) {
       QueryBuilder("update user set phone=? where ID=?", [val, ID], (xs) => { res(xs) });
     }
     else if (target == 'comset') {
-      QueryBuilder("update user set com=CONCAT(?,com) where ID=?", [val, ID], (xs) => { res(xs) });
+      QueryBuilder("update user set com= CONCAT(?,com) where ID=?", [val, ID], (xs) => { res(xs) });
     }
     else if (target == 'comreset') {
       QueryBuilder("update user set com='' where ID=?", [val, ID], (xs) => { res(xs) });
