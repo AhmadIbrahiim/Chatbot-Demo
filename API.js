@@ -29,8 +29,16 @@ function Text(ID, text) {
             console.log("Lang is : " + lang)
             console.log("User text is : "+text);
             if (step == 'comtexten') {
-                res("could you please give your phone number ? or can we use your fb phone number ? ");
+               if(newtext.includes('send'))
+               {
+                res(["could you please give your phone number ? or can we use your fb phone number ? ",{options:null}]);
                 yield db.Step(ID, 'set', 'phoneen');
+               }
+               else
+               {
+                res(["ًWrite your next message or type send to confirm sending your complain. ",{options:null}]);
+                
+               }
                 
             }
             if (step == 'comtextar') {
@@ -89,6 +97,7 @@ function Text(ID, text) {
                     if(newtext.includes('etisalat')||newtext.includes('du')||newtext.includes('vergion'))
                     {
                         res(['Ok, please type your complaint',{options:null}]);
+
                         yield db.Step(ID, 'set', 'comtexten');
                     }
                     else
