@@ -42,8 +42,16 @@ function Text(ID, text) {
                 
             }
             if (step == 'comtextar') {
-                res("من فضلك اكتب رقم هاتفك ");
+              if(newtext.includes('ارسال'))
+              {
+                res(["من فضلك اكتب رقم هاتفك ",{options:null}]);
                 yield db.Step(ID, 'set', 'phonear');
+              }
+              else
+              {
+                res(["رجاء اكتب نص الرساله التاليه .. او اكتب ارسال .. لإرسال الشكوى",{options:null}]);
+                
+              }
                 
             }
             else if (step == 'phoneen') {
