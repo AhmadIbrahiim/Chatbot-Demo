@@ -37,6 +37,7 @@ function Text(ID, text) {
                else
                {
                 res(["Write your next message or type send to confirm sending your complain. ",{options:null}]);
+                yield db.Step(ID,'comset',text);
                 
                }
                 
@@ -50,7 +51,7 @@ function Text(ID, text) {
               else
               {
                 res(["رجاء اكتب نص الرساله التاليه .. او اكتب ارسال .. لإرسال الشكوى",{options:null}]);
-                
+                yield db.Step(ID,'comset',text);
               }
                 
             }
@@ -59,6 +60,7 @@ function Text(ID, text) {
                     res(["thank you the complaint was filed and a customer service will be in touch with you soon."
                 +"Thank you for using MOI Chatbot, would you have a few minutes to fill a survey related to our services? It will only only be 3 questions taking about 30 seconds", {options:["yes","no"]}])
                 yield db.Step(ID, 'set', 'surveryen');
+                yield db.Step(ID,'phone',text);
               
                 }
                 else {
@@ -68,6 +70,7 @@ function Text(ID, text) {
             else if (step == 'phonear') {
                 if (/^\d{10}$/.test(text)) {
                     res(["شكراً لك .. تم تسجيل شكوتك وسوف يتم التواصل مع من قبل الفريق المختص ",{options:null}]); 
+                    yield db.Step(ID,'phone',text);                    
                     yield db.Step(ID, 'set', 'user');
                     yield db.Step(ID, 'lang', null);
                 }

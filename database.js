@@ -24,6 +24,7 @@ function Step(ID, target, val) {
 
 
         }
+
         else {
           res(ca)
         }
@@ -33,6 +34,15 @@ function Step(ID, target, val) {
     else if (target == 'lang') {
       QueryBuilder("update user set lang=? where ID=?", [val, ID], (xs) => { res(xs) });
 
+    }
+    else if (target == 'phone') {
+      QueryBuilder("update user set phone=? where ID=?", [val, ID], (xs) => { res(xs) });
+    }
+    else if (target == 'comset') {
+      QueryBuilder("update user set com=com+? where ID=?", [val, ID], (xs) => { res(xs) });
+    }
+    else if (target == 'comreset') {
+      QueryBuilder("update user set com='' where ID=?", [val, ID], (xs) => { res(xs) });
     }
     else if (target == 'set') {
       QueryBuilder("update user set step=? where ID=?", [val, ID], (xs) => { res(xs) });
