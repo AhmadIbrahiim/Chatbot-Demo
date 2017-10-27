@@ -86,7 +86,7 @@ function Text(ID, text) {
                     res(['يكب ان يكون ردك بنعم او لا',{options:["نعم","لا"]}]);
                 }
                 else if (step == 'complain') {
-                    if(new.includes('etisalat')||new.includes('du')||new.includes('vergion'))
+                    if(newtext.includes('etisalat')||newtext.includes('du')||newtext.includes('vergion'))
                     {
                         res(['Ok, please type your complaint',{options:null}]);
                         yield db.Step(ID, 'set', 'comtexten');
