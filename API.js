@@ -36,7 +36,7 @@ function Text(ID, text) {
                }
                else
                {
-                res(["ًWrite your next message or type send to confirm sending your complain. ",{options:null}]);
+                res(["Write your next message or type send to confirm sending your complain. ",{options:null}]);
                 
                }
                 
