@@ -39,25 +39,24 @@ function Text(ID, text) {
                 
             }
             else if (step == 'phoneen') {
-                if (newtext.includes('yes') || NL.phone_number != 'undefined') {
-                    
+                if (newtext.includes('yes') || /^\d{10}$/.test(text)) {
                     res(["thank you the complaint was filed and a customer service will be in touch with you soon."
                 +"Thank you for using MOI Chatbot, would you have a few minutes to fill a survey related to our services? It will only only be 3 questions taking about 30 seconds", {options:["yes","no"]}])
                 yield db.Step(ID, 'set', 'surveryen');
               
                 }
                 else {
-                    res("You may type your phone number or reply with yes to use your facebook phone number");
+                    res("It seemse to be invaild phone numbere ,Please write vaild phone to type yes .");
                 }
             }
             else if (step == 'phonear') {
-                if (NL.phone_number != 'undefined') {
+                if (/^\d{10}$/.test(text)) {
                     res(["شكراً لك .. تم تسجيل شكوتك وسوف يتم التواصل مع من قبل الفريق المختص ",{options:null}]); 
                     yield db.Step(ID, 'set', 'user');
                     yield db.Step(ID, 'lang', null);
                 }
                 else {
-                    res("يجب كتابة رقم الهاتف .. لنواصل مع تسجيل الشكوى");
+                    res("برجاء كتابة الهاتف بصيغه صحيحه .. ويجب ان يكون 10ارقام");
                 }
             }
 
@@ -87,8 +86,17 @@ function Text(ID, text) {
                     res(['يكب ان يكون ردك بنعم او لا',{options:["نعم","لا"]}]);
                 }
                 else if (step == 'complain') {
-                    res(['Ok, please type your complaint',{options:null}]);
-                    yield db.Step(ID, 'set', 'comtexten');
+                    if(new.includes('etisalat')||new.includes('du')||new.includes('vergion'))
+                    {
+                        res(['Ok, please type your complaint',{options:null}]);
+                        yield db.Step(ID, 'set', 'comtexten');
+                    }
+                    else
+                    {
+                        res(['You have to reply with *du* *etisalat* or *vergion*..',{options:['du','etisalat','vergion']}]);
+                        
+                    }
+
                 }
                 else if (step == "creditcarden") {
                     res(["Enter the expiry date in the format mm/yyyy",{options:null}])
@@ -257,7 +265,7 @@ function Text(ID, text) {
 
                     }
                     else if (typeof NL.complaint != 'undefined') {
-                        res(["against who ?",{options:["Etisalat","Du"]}]);
+                        res(["against who ?",{options:["Etisalat","Du",'vergion']}]);
                         yield db.Step(ID, 'set', 'complain')
                         //Github deploy ..
                     }
@@ -398,8 +406,16 @@ function Text(ID, text) {
                     res(['يجب ان يكون رد بـ نعم او لا',{options:null}]);
                 }
                 else if (step == 'complainar') {
-                    res(['برجاء كتابة الشكوى : ',{options:null}]);
-                    yield db.Step(ID, 'set', 'comtextar');
+                    if(newtext.includes(['اتصالات','دو','فيرجين']))
+                    {
+                        res(['برجاء كتابة الشكوى : ',{options:null}]);
+                        yield db.Step(ID, 'set', 'comtextar');
+                    }
+                    else
+                    {
+                        res(["يجب ان يكون ردك بـ *اتصالات* او *دو* او *فيرجين* لنكمل ..",{options:['اتصالات','دو','فيرجين']}])
+                    }
+                  
 
                 }
                 else if (step == 'waitfortrorvisaar') {
@@ -407,7 +423,7 @@ function Text(ID, text) {
                         res(["الـ " + NL.tobe[0].value + " الخاصه بك هي 1000 دينار"+"هل تريد ان تدفعها ؟",{options:["نعم","لا"]}]);
                     }
                     else if (typeof NL.complaint != 'undefined') {
-                        res([" ؟ضد من  ", { options: ["اتصالات", "دو"] }]);
+                        res([" ؟ضد من  ", { options: ["اتصالات", "دو","فيرجين"] }]);
                         yield db.Step(ID, 'set', 'complainar')
 
                     }
