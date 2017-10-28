@@ -35,14 +35,14 @@ function Text(ID, text) {
                if(newtext.includes('send'))
                {
                    //comtexten1
-                var cl = yield db.GetPayText('writecomar')
+                var cl = yield db.GetPayText('comtexten1')
                 res([cl[0].text,{options:cl[0].options}]);
                 yield db.Step(ID, 'set', 'phoneen');
                }
                else
                {
                    //comtexten2
-                var cl = yield db.GetPayText('writecomar')                   
+                var cl = yield db.GetPayText('comtexten2')                   
                 res([cl[0].text,{options:cl[0].options}]);
                 yield db.Step(ID,'comset',text+" ");
                 
