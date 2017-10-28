@@ -56,6 +56,10 @@ function GetPayText(pay)
   {
     QueryBuilder("Select * from payload where payload.key=?",[pay],x=>
     {
+     if(x[0].options!=null)
+     {
+       x[0].options = x[0].options.split(',');
+     }
       res(x);
     })
   })

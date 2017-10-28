@@ -577,9 +577,8 @@ function Text(ID, text) {
                         yield db.Step(ID, 'set', 'comtextar');
                     }
                     else {
-                        //replyelsecom
-                        var cl = yield db.GetPayText('replyelsecom')
-                        
+                        //youhavetoreplyc
+                        var cl = yield db.GetPayText('youhavetoreplyc')
                         res([cl[0].text, { options: cl[0].options }])
                     }
 
