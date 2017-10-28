@@ -11,9 +11,8 @@ function Text(ID, text) {
         co(function* () {
             var call = yield db.Step(ID, 'get', '');
             console.log('----------------');
-            var cl = yield db.GetPayText('writecomar');
+            var cl = yield db.GetPayText('writecomar')[0];
             console.log(cl);
-            console.log(cl[0])
             //var object = yield facebook.GetuserData(ID);
             var newtext = text.toLowerCase();
             var NL = yield NLP.GetEntitys(newtext);
