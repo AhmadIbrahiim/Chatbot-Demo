@@ -570,7 +570,7 @@ function Text(ID, text) {
                     res(['يجب ان يكون رد بـ نعم او لا', { options: null }]);
                 }
                 else if (step == 'complainar') {
-                    if (newtext.includes(['اتصالات', 'دو', 'فيرجين'])) {
+                    if (newtext.includes('اتصالات')||newtext.includes('دو')||newtext.includes('فيرجين')) {
                         //writecomar
                         var cl = yield db.GetPayText('writecomar')
                         res([cl[0].text, { options: null }]);
