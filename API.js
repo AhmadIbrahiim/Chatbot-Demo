@@ -30,81 +30,88 @@ function Text(ID, text) {
                 lang = lango
             }
             console.log("Lang is : " + lang)
-            console.log("User text is : "+text);
+            console.log("User text is : " + text);
             if (step == 'comtexten') {
-               if(newtext.includes('send'))
-               {
-                   //comtexten1
-                var cl = yield db.GetPayText('comtexten1')
-                res([cl[0].text,{options:cl[0].options}]);
-                yield db.Step(ID, 'set', 'phoneen');
-               }
-               else
-               {
-                   //comtexten2
-                var cl = yield db.GetPayText('comtexten2')                   
-                res([cl[0].text,{options:cl[0].options}]);
-                yield db.Step(ID,'comset',text+" ");
-                
-               }
-                
+                if (newtext.includes('send')) {
+                    //comtexten1
+                    var cl = yield db.GetPayText('comtexten1')
+                    res([cl[0].text, { options: cl[0].options }]);
+                    yield db.Step(ID, 'set', 'phoneen');
+                }
+                else {
+                    //comtexten2
+                    var cl = yield db.GetPayText('comtexten2')
+                    res([cl[0].text, { options: cl[0].options }]);
+                    yield db.Step(ID, 'comset', text + " ");
+
+                }
+
             }
             if (step == 'comtextar') {
-              if(newtext.includes('ارسال'))
-              {
-                  //comtextar1
-                res(["من فضلك اكتب رقم هاتفك ",{options:null}]);
-                yield db.Step(ID, 'set', 'phonear');
-              }
-              else
-              {
-                  //comtextar2
-                  res(["رجاء اكتب نص الرساله التاليه .. او اكتب ارسال .. لإرسال الشكوى",{options:null}]);
-                yield db.Step(ID,'comset',text);
-              }
-                
+                if (newtext.includes('ارسال')) {
+                    //comtextar1
+                    var cl = yield db.GetPayText('comtextar1')
+                    res([cl[0].text, { options: null }]);
+                    yield db.Step(ID, 'set', 'phonear');
+                }
+                else {
+                    //comtextar2
+                    var cl = yield db.GetPayText('comtextar2')
+                    res([cl[0].text, { options: null }]);
+                    yield db.Step(ID, 'comset', text);
+                }
+
             }
             else if (step == 'phoneen') {
                 if (newtext.includes('yes') || /^\d{10}$/.test(text)) {
                     //phoneen1
-                    res(["thank you the complaint was filed and a customer service will be in touch with you soon. Thank you for using MOI Chatbot, would you have a few minutes to fill a survey related to our services? It will only only be 3 questions taking about 30 seconds", {options:["yes","no"]}])
-                yield db.Step(ID, 'set', 'surveryen');
-                yield db.Step(ID,'phone',text);
-              
+                    var cl = yield db.GetPayText('phoneen1')
+                    res([cl[0].text, { options: ["yes", "no"] }])
+                    yield db.Step(ID, 'set', 'surveryen');
+                    yield db.Step(ID, 'phone', text);
+
                 }
                 else {
-                     //phoneen2
-                    res(["It seemse to be invaild phone numbere ,Please write vaild phone to type yes .",{options:null}]);
+                    //phoneen2
+                    var cl = yield db.GetPayText('phoneen2')
+                    res([cl[0].text, { options: null }]);
                 }
             }
             else if (step == 'phonear') {
                 if (/^\d{10}$/.test(text)) {
                     //phonear1
-                    res(["شكراً لك .. تم تسجيل شكوتك وسوف يتم التواصل مع من قبل الفريق المختص ",{options:null}]); 
-                    yield db.Step(ID,'phone',text);                    
+                    var cl = yield db.GetPayText('phonear1')
+
+                    res([cl[0].text, { options: null }]);
+                    yield db.Step(ID, 'phone', text);
                     yield db.Step(ID, 'set', 'user');
                     yield db.Step(ID, 'lang', null);
                 }
                 else {
                     //phonear2
-                    res("برجاء كتابة الهاتف بصيغه صحيحه .. ويجب ان يكون 10ارقام");
+                    var cl = yield db.GetPayText('phonear2')
+                    res([cl[0].text, { options: null }]);
                 }
             }
 
             console.log("Before English or Arabic --> ")
-            if ( lang == "en") {
+            if (lang == "en") {
                 console.log("Inside text English -->")
-                if ((step == 'new') ||typeof NL.greeting != 'undefined' ) {
+                if ((step == 'new') || typeof NL.greeting != 'undefined') {
                     //welcomeen
-                    res(["Welcome to our MOI Chatbot, how can I help you ?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}]);
-                    yield db.Step(ID,'set','waitfortrorvisa')
-                    
+                    var cl = yield db.GetPayText('welcomeen')
+
+                    res([cl[0].text, { options: ["Visa/RP Information", "Traffic Tickets", "Complain"] }]);
+                    yield db.Step(ID, 'set', 'waitfortrorvisa')
+
 
                 }
 
                 else if (newtext == 'yes' && step == 'waityes') {
                     //yeshelpen
-                    res([Ans.RandomYes(),{options:null}]);
+                    var cl = yield db.GetPayText('yeshelpen')
+
+                    res([cl[0].text, { options: null }]);
                     yield db.Step(ID, 'set', 'yeshelp');
 
                 }
@@ -116,38 +123,44 @@ function Text(ID, text) {
 
                 }
                 else if (step == 'waityes') {
+                    var cl = yield db.GetPayText('waityesar')
                     //waityesar
-                    res(['يكب ان يكون ردك بنعم او لا',{options:["نعم","لا"]}]);
+                    res([cl[0].text, { options: ["نعم", "لا"] }]);
                 }
                 else if (step == 'complain') {
-                    if(newtext.includes('etisalat')||newtext.includes('du')||newtext.includes('vergion'))
-                    {
+                    if (newtext.includes('etisalat') || newtext.includes('du') || newtext.includes('vergion')) {
                         //com1
-                        res(['Ok, please type your complaint',{options:null}]);
+                        var cl = yield db.GetPayText('com1')
+                        res([cl[0].text, { options: null }]);
 
                         yield db.Step(ID, 'set', 'comtexten');
                     }
-                    else
-                    {
+                    else {
                         //com2
-                        res(['You have to reply with *du* *etisalat* or *vergion*..',{options:['du','etisalat','vergion']}]);
-                        
+                        var cl = yield db.GetPayText('com2')
+
+                        res([cl[0].text, { options: ['du', 'etisalat', 'vergion'] }]);
+
                     }
 
                 }
                 else if (step == "creditcarden") {
                     //credit1
-                    res(["Enter the expiry date in the format mm/yyyy",{options:null}])
+                    var cl = yield db.GetPayText('credit1')
+                    res([cl[0].text, { options: null }])
                     yield db.Step(ID, 'set', 'expen');
                 }
                 else if (step == "expen") {
                     //expen
-                    res(["Enter the security code at the back of the card",{options:null}])
+                    var cl = yield db.GetPayText('expen')
+                    res([cl[0].text, { options: null }])
                     yield db.Step(ID, 'set', 'backcodeen')
                 }
                 else if (step == "backcodeen") {
                     //backcode
-                    res(["Thank you for the information, Please hold until we process your payment.", "thanks for waiting, the Payment of AED 1456 was successfully processed using your credit card ending with 9999. The payment confirmation no is 293792749, would you like to receive the invoice on SMS?",{options:['yes','no']}]);
+                    var cl = yield db.GetPayText('backcode')
+
+                    res([cl[0].text, { options: ['yes', 'no'] }]);
                     yield db.Step(ID, 'set', 'waitholden')
                     // setTimeout(() => {
                     //     facebook.sendTextMessage(ID, "thanks for waiting, the Payment of AED 1456 was successfully processed using your credit card ending with 9999. The payment confirmation no is 293792749, would you like to receive the invoice on SMS?")
@@ -156,26 +169,33 @@ function Text(ID, text) {
                 }
                 else if (step == 'confirmsmsenglish') {
                     if (newtext.includes('yes')) {
-                //confirmys
-                        res(["Thank you ,We'll keep you notifed thorught SMS \n Thank you for using MOI Chatbot, would you have a few minutes to fill a survey related to our services? It will only only be 3 questions taking about 30 seconds", {options:["yes","no"]}])
+                        //confirmys
+                        var cl = yield db.GetPayText('confirmys')
+
+                        res([cl[0].text, { options: cl[0].options }])
                         yield db.Step(ID, 'set', 'surveryen')
                     }
                     else if (newtext.includes('no')) {
                         //confirmnoen
-                        res(["No problem , Enjoy your day ",{options:null}])
+                        var cl = yield db.GetPayText('confirmnoen')
+
+                        res([cl[0].text, { options: null }])
 
 
                     }
                     else if (newtext.includes('home')) {
                         //welcomeen
-                        res(["Welcome to our MOI Chatbot, how can I help you ?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}]);
-                        yield db.Step(ID,'set','waitfortrorvisa')
+                        var cl = yield db.GetPayText('welcomeen')
+
+                        res([cl[0].text, { options: ["Visa/RP Information", "Traffic Tickets", "Complain"] }]);
+                        yield db.Step(ID, 'set', 'waitfortrorvisa')
                         //	message(ID,"text","hi")
 
                     }
                     else {
                         //replywelcome
-                        res(["You have to reply with *yes* to proceed *no* or *home* to move to another service. .",{options:null}])
+                        var cl = yield db.GetPayText('replywelcome')
+                        res([cl[0].text, { options: null }])
 
                     }
                 }
@@ -185,179 +205,221 @@ function Text(ID, text) {
                 else if (step == 'nextscalfrom') {
                     if (text > 10) {
                         //surverfirst
-                        res(["  ",{options:null}]);
+                        var cl = yield db.GetPayText('surverfirst')
+
+                        res([cl[0].text, { options: null }]);
                         yield db.Step(ID, 'set', 'user');
                         yield db.Step(ID, 'lang', null);
 
                     }
                     else if (text > 5) {
                         //suerver1
-                        res(["Thank you so much",{options:null}])
+                        res(["Thank you so much", { options: null }])
                         yield db.Step(ID, 'set', 'user');
                         yield db.Step(ID, 'lang', null);
                     }
                     else {
                         //elsesurvery
-                        res(["Sorry to hear that, can you provide us with a brief description why you rate the services this low?",{options:null}]);
+                        var cl = yield db.GetPayText('elsesurvery')
+
+                        res([cl[0].text, { options: null }]);
                         yield db.Step(ID, 'set', 'resonlowrate')
                     }
                 }
                 else if (step == 'resonlowrate') {
                     //reasonrate
-                    res(["Thanks for your response, would you mind if one of our customer care staff contacted you to discuss your experience further more?",{options:null}]);
+                    var cl = yield db.GetPayText('reasonrate')
+                    res([cl[0].text, { options: null }]);
                     yield db.Step(ID, 'set', 'readytocall')
                 }
                 else if (step == 'readytocall') {
                     if (newtext.includes('yes')) {
                         //yescallready
-                        res(["Thanks! We will contact you very soon to check this matter.."+"Great, Anything else I can help you with?",{options:["Visa/RP Information","Traffic Tickets","Complain"]} ]);
+                        var cl = yield db.GetPayText('yescallready')
+                        res([cl[0].text, { options: ["Visa/RP Information", "Traffic Tickets", "Complain"] }]);
                         yield db.Step(ID, 'set', 'waitfortrorvisa')
 
                     }
                     else if (newtext.includes('no')) {
                         //noreadyforcall
-                        res(["Great, Anything else I can help you with?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}])
+                        var cl = yield db.GetPayText('noreadyforcall')
+
+                        res([cl[0].text, { options: ["Visa/RP Information", "Traffic Tickets", "Complain"] }])
                         yield db.Step(ID, 'set', 'waitfortrorvisa')
                     }
                     else if (newtext.includes('home')) {
                         //welcomeen
-                        res(["Welcome to our MOI Chatbot, how can I help you ?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}]);
-                        yield db.Step(ID,'set','waitfortrorvisa')
+                        var cl = yield db.GetPayText('welcomeen')
+                        res([cl[0].text, { options: ["Visa/RP Information", "Traffic Tickets", "Complain"] }]);
+                        yield db.Step(ID, 'set', 'waitfortrorvisa')
                     }
                     else {
                         //replywelcome
-                        res(["Please reply with *yes* or *no* or *home* to back to services",{options:null}])
+                        var cl = yield db.GetPayText('replywelcome')
+                        res([cl[0].text, { options: null }])
                     }
 
                 }
                 else if (step == 'scalefrom') {
                     if (text > 10) {
                         //scalfefrom
-                        res(["Thanks for the compliment, we will consider that as 10. :)"+ " on a scale from 1 to 10, how do are you satisfied with the electronic services of MOI in general?",{options:null}]);
+                        var cl = yield db.GetPayText('scalfefrom')
+
+                        res([cl[0].text, { options: null }]);
 
                     }
                     else if (text > 5) {
                         //ratebelow5
-                        res(["Thank you so much on a scale from 1 to 10, how do are you satisfied with the electronic services of MOI in general?",{options:null}]);
+                        var cl = yield db.GetPayText('ratebelow5')
+                        res([cl[0].text, { options: null }]);
                     }
                     else {
-                        res("We're sorry to hear that"+" on a scale from 1 to 10, how do are you satisfied with the electronic services of MOI in general?",{options:null})
+                        res("We're sorry to hear that" + " on a scale from 1 to 10, how do are you satisfied with the electronic services of MOI in general?", { options: null })
                     }
                     yield db.Step(ID, 'set', 'nextscalfrom')
                 }
                 else if (step == 'surveryen') {
                     if (newtext.includes('yes')) {
                         //surveryen
-                        res(['Great, thanks.', "On a scale 1 to 10, how do are you satisfied with this chatbot?",{options:null}])
+                        var cl = yield db.GetPayText('surveryen')
+
+                        res([cl[0].text, { options: null }])
                         yield db.Step(ID, 'set', 'scalefrom')
                     }
                     else if (newtext.includes('no')) {
                         //noprosurv
-                        res(['Oh Okay no problem :) ',{options:null}]);
+                        res(['Oh Okay no problem :) ', { options: null }]);
                         yield db.Step(ID, 'set', 'user');
                         yield db.Step(ID, 'lang', null);
                     }
                     else if (newtext.includes('home')) {
                         //welcomeen
-                        res(["Welcome to our MOI Chatbot, how can I help you ?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}]);
-                        yield db.Step(ID,'set','waitfortrorvisa')
+                        var cl = yield db.GetPayText('welcomeen')
+                        res([cl[0].text, { options: ["Visa/RP Information", "Traffic Tickets", "Complain"] }]);
+                        yield db.Step(ID, 'set', 'waitfortrorvisa')
 
                     }
                     else {
                         //expecthome
-                        res(['I expect to reply with yes, no  or *home* to back to services:) ',{options:null}]);
+                        var cl = yield db.GetPayText('expecthome')
+
+                        res([cl[0].text, { options: null }]);
                     }
                 }
                 else if ((newtext.includes('visa') || newtext.includes('traffic')) && step == 'waitfortrorvisa') {
                     //visatrafi
-                    res(["Great! These are the vehicles registered with your account, for which vehicle do you wish to view?",{options:["AD 12/32432","AD 12/3242","All"]}]);
+                    var cl = yield db.GetPayText('visatrafi')
+
+                    res([cl[0].text, { options: ["AD 12/32432", "AD 12/3242", "All"] }]);
                     yield db.Step(ID, 'set', 'waitselection')
                 }
                 else if (step == 'payamountafter') {
                     console.log('Insdie payment after --> ')
                     if (newtext.includes('pay')) {
                         //payafter
-                        res(["Would like to pay using this chat or using or mobile payment gateway?",{options:["yes","no"]}]);
+                        var cl = yield db.GetPayText('payafter')
+
+                        res([cl[0].text, { options: ["yes", "no"] }]);
 
                     }
                     else if (newtext.includes('no')) {
                         //nopay
-                        res(['Okay no problem we have cancled it :) ',{options:null}]);
+                        var cl = yield db.GetPayText('nopay')
+                        res([cl[0].text, { options: null }]);
                         yield db.Step(ID, 'set', 'user');
                         yield db.Step(ID, 'lang', null)
                     }
-                    else if(newtext.includes('yes')||newtext.includes('pay it')||newtext.includes('mobile'))
-                    {
+                    else if (newtext.includes('yes') || newtext.includes('pay it') || newtext.includes('mobile')) {
                         //thankspaying
-                        res(['Thank your for paying it ',{options:null}]);
+                        var cl = yield db.GetPayText('thankspaying')
+
+                        res([cl[0].text, { options: null }]);
                         yield db.Step(ID, 'set', 'user');
                         yield db.Step(ID, 'lang', null)
-                        
+
                     }
                     else if (newtext.includes('home')) {
                         //welcomeen
-                        res(["Welcome to our MOI Chatbot, how can I help you ?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}]);
-                        yield db.Step(ID,'set','waitfortrorvisa')
+                        var cl = yield db.GetPayText('welcomeen')
+
+                        res([cl[0].text, { options: ["Visa/RP Information", "Traffic Tickets", "Complain"] }]);
+                        yield db.Step(ID, 'set', 'waitfortrorvisa')
 
                     }
                     else {
                         //expecthome
-                        res(["I expect that you will say *pay it* to proceed *no* to cancel or *home* to move to another service. ",{options:null}])
+                        var cl = yield db.GetPayText('expecthome')
+
+                        res([cl[0].text, { options: null }])
                     }
 
                 }
                 else if (step == 'waitselection') {
                     yield db.Step(ID, 'set', 'payamountafter')
                     //totalpayment
-                    res(["The total amount for all fines pending payment is AED 1456, would you like to",{options:["Pay amount","See Details","Go back"]}])
+                    var cl = yield db.GetPayText('totalpayment')
+                    res([cl[0].text, { options: ["Pay amount", "See Details", "Go back"] }])
                 }
                 else if (step == 'payrelatedto') {
                     if (typeof NL.postive != 'undefined') {
                         //nopostiveres
-                        res(["Great, is the fine related to Traffic, Visa/RP, or Something else?",{options:["Visa/RP Information","Traffic Tickets","Complain"]} ]);
+                        var cl = yield db.GetPayText('nopostiveres')
+
+                        res([cl[0].text, { options: ["Visa/RP Information", "Traffic Tickets", "Complain"] }]);
                         yield db.Step(ID, 'set', 'waitfortrorvisa')
                     }
                     else {
                         //replywithvisa
-                        res(['You have to type something related to *visa* or *traffic* or *home* to back to scervice ',{options:["yes","no"]}])
+                        var cl = yield db.GetPayText('replywithvisa')
+
+                        res([cl[0].text, { options: ["yes", "no"] }])
                     }
                 }
                 else if (step == 'waitfortrorvisa') {
                     if (typeof NL.action != 'undefined' && typeof NL.tobe != 'undefined') {
                         //waitforvisatake
-                        res(["Thanks,, let me confirm, you wish to pay your " + NL.tobe[0].value + ". is this correct",{options:["yes","no"]}])
+                        var cl = yield db.GetPayText('waitforvisatake')
+
+                        res(["Thanks,, let me confirm, you wish to pay your " + NL.tobe[0].value + ". is this correct", { options: ["yes", "no"] }])
                         yield db.Step(ID, 'set', 'payrelatedto')
 
                     }
                     else if (typeof NL.complaint != 'undefined') {
                         //agianstwho
-                        res(["against who ?",{options:["Etisalat","Du",'vergion']}]);
+                        var cl = yield db.GetPayText('agianstwho')
+
+                        res([cl[0].text, { options: cl[0].options }]);
                         yield db.Step(ID, 'set', 'complain')
                         //Github deploy ..
                     }
                     else if (newtext.includes('no')) {
                         //haveagreatdayno
-                        res(['Okay , Have a great day :) ',{options:null}]);
+
+                        res(['Okay , Have a great day :) ', { options: null }]);
                         yield db.Step(ID, 'set', 'user');
                         yield db.Step(ID, 'lang', null);
 
                     }
                     else if (newtext.includes('home')) {
                         //welcomeen
-                        res(["Welcome to our MOI Chatbot, how can I help you ?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}]);
-                        yield db.Step(ID,'set','waitfortrorvisa')
+                        var cl = yield db.GetPayText('welcomeen')
+
+                        res([cl[0].text, { options: cl[0].options }]);
+                        yield db.Step(ID, 'set', 'waitfortrorvisa')
 
                     }
                     else {
                         //replyvisafor
-                        res(["Sorry !You have to answer with something related to visa or traffic or fines or home to back to serviescs  ",{options:null}]);
+                        var cl = yield db.GetPayText('replyvisafor')
+
+                        res([cl[0].text, { options: null }]);
                     }
 
                 }
                 else if (step == 'user') {
                     console.log('else')
                     if (typeof NL.thanks != 'undefined') {
-                        res(['Glad to help :) ',{options:null}])
+                        res(['Glad to help :) ', { options: null }])
                     }
                     else if (newtext.includes('no')) {
                         res("Have a great day :)")
@@ -366,14 +428,16 @@ function Text(ID, text) {
                     }
                     else {
                         //welcomeen
-                        res(["Welcome to our MOI Chatbot, how can I help you ?",{options:["Visa/RP Information","Traffic Tickets","Complain"]}]);
-                        yield db.Step(ID,'set','waitfortrorvisa')
+                        var cl = yield db.GetPayText('welcomeen')
+
+                        res([cl[0].text, { options: cl[0].options }]);
+                        yield db.Step(ID, 'set', 'waitfortrorvisa')
                         //res(Ans.RandUnkown())
                     }
 
                 }
             }
-            if ( lang == "ar") {
+            if (lang == "ar") {
                 if ((step == 'user' || step == 'new') /* && typeof NL.greeting != 'undefined' */) {
                     // if(step=='new')
                     // {
@@ -401,7 +465,9 @@ function Text(ID, text) {
                     // }
                     // else 
                     // {
-                    res(["اهلا   , كيف يمكننى المساعده",{options:["فيزا","شكوى"]}]);
+                    var cl = yield db.GetPayText('weclomear')
+
+                    res([cl[0].text, { options:cl[0].options }]);
                     yield db.Step(ID, 'set', 'waitfortrorvisaar')
                     //weclomear
 
@@ -410,28 +476,37 @@ function Text(ID, text) {
                 else if (step == 'waitselectionar') {
                     yield db.Step(ID, 'set', 'payamountafterar')
                     //totalpayar
-                    res(["اجمالى الغرامات هي 1402 دينار .. ماذا تريد ان تفعل ؟",{options:["ادفع"]}]);
+                    var cl = yield db.GetPayText('totalpayar')
+                    
+                    res([cl[0].text, { options: ["ادفع"] }]);
                 }
                 else if (step == "creditcardar") {
                     //expdataarcred
-                    res(["برجاء كتابة رقم انتهاء الصلاحيه بصيغه شهر/سنه",{options:null}])
+                    var cl = yield db.GetPayText('expdataarcred')
+                    
+                    res([cl[0].text, { options: null }])
                     yield db.Step(ID, 'set', 'expar');
                 }
                 else if (step == "expar") {
                     //expback
-                    res(["برجاء كتابة الثلاث ارقام الخاص بالبنك بظهر الكارت ..",{options:null}])
+                    var cl = yield db.GetPayText('expback')
+                    res([cl[0].text, { options: null }])
                     yield db.Step(ID, 'set', 'backcodear')
                 }
                 else if (step == "backcodear") {
                     //backcodear
-                    res(["شكراً لك .. برجاء الانتظار حتى يتم تنفيذ العملية شكراً لك .. تم تأكيد عملية الدفع مبلغ *1250 ريال * بالكارت الذى ينتهى بـ 9999.. رقم العملية هو *9895552111* هل ترغب ف استقبال المراسالات عن طريق الرسائل النصية ",{options:["نغم","لا"]}]);
+                    var cl = yield db.GetPayText('backcodear')
+                    
+                    res([cl[0].text, { options: ["نغم", "لا"] }]);
                     yield db.Step(ID, 'set', 'confirmsmsarabic')
 
                 }
                 else if (step == 'confirmsmsarabic') {
                     if (text.includes('نعم')) {
                         //yesnotifiar
-                        res(["شكراً لك  .. سوف تستقبل كل التنبيهات علي هاتفك.",{options:null}])
+                        var cl = yield db.GetPayText('yesnotifiar')
+                        
+                        res([cl[0].text, { options: null }])
                         yield db.Step(ID, 'set', 'user');
                         yield db.Step(ID, 'lang', null)
                     }
@@ -442,7 +517,9 @@ function Text(ID, text) {
                     }
                     else {
                         //replywithyesar
-                        res(["يجب ان يكن ردك .. ب *نعم* او *لا* للمتابعه",{options:null}])
+                        var cl = yield db.GetPayText('replywithyesar')
+                        
+                        res([cl[0].text, { options: null }])
 
                     }
 
@@ -451,29 +528,36 @@ function Text(ID, text) {
                 else if (step == 'payamountafterar') {
                     if (newtext.includes('ادفع')) {
                         //doyouwanttopay
-                        res(["هل ترغب ف دفع المبلغ بإستخدام وسيط الدفع ام عن طريق الموبيل ؟",{options:["وسيط","موبيل"]}])
+                        var cl = yield db.GetPayText('doyouwanttopay')
+                        
+                        res([cl[0].text, { options: ["وسيط", "موبيل"] }])
                     }
-                    else if(newtext.includes('وسيط')||newtext.includes('موبيل'))
-                    {
+                    else if (newtext.includes('وسيط') || newtext.includes('موبيل')) {
                         //processtoar
-                        res(["جاري تنفيذ عملية الدفع .. وسوف يتم ابلاغك هاتفياً فورا الاتمام",{options:null}])
+                        var cl = yield db.GetPayText('processtoar')
+                        
+                        res([cl[0].text, { options: null }])
                         yield db.Step(ID, 'set', 'user');
                         yield db.Step(ID, 'lang', null);
-                        
+
                     }
                     else if (newtext.includes('الغاء')) {
                         //cancelprocess
-                        res(["لا مشكله .. تم الغاء العملية",{options:null}])
+                        var cl = yield db.GetPayText('cancelprocess')
+                        
+                        res([cl[0].text, { options: null }])
                         yield db.Step(ID, 'set', 'user');
                         yield db.Step(ID, 'lang', null);
                     }
                     else {
                         //youhavetoreply
-                        res(["يجب عليك ان تكتب *ادفع* او *الغاء* للمتابعة",{options:null}])
+                        var cl = yield db.GetPayText('youhavetoreply')
+                        
+                        res([cl[0].text, { options: null }])
                     }
                 }
                 else if (newtext == 'نعم' && step == 'waityes') {
-                    res(["شكراً لك .. كيف يمكننى مساعدتك ؟",{options:null}]);
+                    res(["شكراً لك .. كيف يمكننى مساعدتك ؟", { options: null }]);
                     yield db.Step(ID, 'set', 'yeshelp');
 
                 }
@@ -483,46 +567,51 @@ function Text(ID, text) {
                     yield db.Step(ID, 'lang', null);
                 }
                 else if (step == 'waityes') {
-                    res(['يجب ان يكون رد بـ نعم او لا',{options:null}]);
+                    res(['يجب ان يكون رد بـ نعم او لا', { options: null }]);
                 }
                 else if (step == 'complainar') {
-                    if(newtext.includes(['اتصالات','دو','فيرجين']))
-                    {
+                    if (newtext.includes(['اتصالات', 'دو', 'فيرجين'])) {
                         //writecomar
-                        res(['برجاء كتابة الشكوى : ',{options:null}]);
+                        var cl = yield db.GetPayText('writecomar')
+                        res([cl[0].text, { options: null }]);
                         yield db.Step(ID, 'set', 'comtextar');
                     }
-                    else
-                    {
+                    else {
                         //replyelsecom
-                        res(["يجب ان يكون ردك بـ *اتصالات* او *دو* او *فيرجين* لنكمل ..",{options:['اتصالات','دو','فيرجين']}])
+                        var cl = yield db.GetPayText('replyelsecom')
+                        
+                        res([cl[0].text, { options: cl[0].options }])
                     }
-                  
+
 
                 }
                 else if (step == 'waitfortrorvisaar') {
                     if (typeof NL.action != 'undefined' && typeof NL.tobe != 'undefined') {
-                        res(["الـ " + NL.tobe[0].value + " الخاصه بك هي 1000 دينار"+"هل تريد ان تدفعها ؟",{options:["نعم","لا"]}]);
+                        res(["الـ " + NL.tobe[0].value + " الخاصه بك هي 1000 دينار" + "هل تريد ان تدفعها ؟", { options: ["نعم", "لا"] }]);
                     }
                     else if (typeof NL.complaint != 'undefined') {
-                        res([" ؟ضد من  ", { options: ["اتصالات", "دو","فيرجين"] }]);
+                        var cl = yield db.GetPayText('writecomar')
+                        //againswhoar
+                        var cl = yield db.GetPayText('againswhoar')
+                        
+                        res([cl[0].text, { options: cl[0].options }]);
                         yield db.Step(ID, 'set', 'complainar')
 
                     }
                     else if (newtext.includes('فيزا') || newtext.includes('رخصه') || typeof NL.traffic != 'undefined') {
 
-                        res(["هذه هي المركبات المسجله على الحساب .. اي مركبة تريد ؟",{options:["Ad/555","Ad/77555"]}])
+                        res(["هذه هي المركبات المسجله على الحساب .. اي مركبة تريد ؟", { options: ["Ad/555", "Ad/77555"] }])
                         yield db.Step(ID, 'set', 'waitselectionar')
                     }
                     else {
-                        res(["يجب ان يكون ردك له علاقة بالفيزا او الرخصة ",{options:null}])
+                        res(["يجب ان يكون ردك له علاقة بالفيزا او الرخصة ", { options: null }])
                     }
 
                 }
                 else if (step == 'user') {
 
                     yield db.Step(ID, 'lang', null)
-                    res([Ans.RandUnkowAr(),{options:null}])
+                    res([Ans.RandUnkowAr(), { options: null }])
                 }
 
             }
