@@ -54,7 +54,7 @@ function GetPayText(pay)
 {
   return new Promise((res,rej)=>
   {
-    QueryBuilder("Select * from payload where key=?",[pay],x=>
+    QueryBuilder("Select * from payload where payload.key=?",[pay],x=>
     {
       res(x);
     })
