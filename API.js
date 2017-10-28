@@ -11,7 +11,7 @@ function Text(ID, text) {
         co(function* () {
             var call = yield db.Step(ID, 'get', '');
             console.log('----------------');
-            var cl = yield db.GetPayText('writecomar')[0];
+            ;
             console.log(cl);
             //var object = yield facebook.GetuserData(ID);
             var newtext = text.toLowerCase();
@@ -35,13 +35,15 @@ function Text(ID, text) {
                if(newtext.includes('send'))
                {
                    //comtexten1
-                res(["could you please give your phone number ? or can we use your fb phone number ? ",{options:null}]);
+                var cl = yield db.GetPayText('writecomar')
+                res([cl[0].text,{options:cl[0].options}]);
                 yield db.Step(ID, 'set', 'phoneen');
                }
                else
                {
                    //comtexten2
-                res(["Write your next message or type send to confirm sending your complain. ",{options:null}]);
+                var cl = yield db.GetPayText('writecomar')                   
+                res([cl[0].text,{options:cl[0].options}]);
                 yield db.Step(ID,'comset',text+" ");
                 
                }
