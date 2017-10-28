@@ -50,6 +50,17 @@ function Step(ID, target, val) {
   })
 }
 
+function GetPayText(pay)
+{
+  return new Promise((res,rej)=>
+  {
+    QueryBuilder("Select * from payload where key=?",[pay],x=>
+    {
+      res(x);
+    })
+  })
+}
+
 function InseryPayload(key,text,option)
 {
   return new Promise((res,rej)=>{
@@ -93,7 +104,8 @@ function QueryBuilderA(query, prams) {
 module.exports =
   {
     Step: Step,
-    InseryPayload
+    InseryPayload,
+    GetPayText
   }
 
 
